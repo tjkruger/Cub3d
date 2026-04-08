@@ -30,7 +30,7 @@ all: $(LIBFT_NAME)
 
 $(LIBFT_NAME): $(OBJ)
 	ar rcs $@ $(OBJ)
-	@echo "✨ libft built successfully!"
+	@echo "libft built successfully!"
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@

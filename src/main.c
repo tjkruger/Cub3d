@@ -1,4 +1,4 @@
-#include "MLX42/include/MLX42/MLX42.h"
+#include "../MLX42/include/MLX42/MLX42.h"
 #include <stdlib.h>
 
 static void	key_hook(mlx_key_data_t keydata, void *param)

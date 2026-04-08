@@ -10,10 +10,10 @@ MLX_DIR     = MLX42
 
 # === Source groups ===
 MAIN        = main.c
-BSP         = bsp/bsp.c
+#BSP         = bsp/bsp.c
 
 # Combine all source groups
-SRC         = $(MAIN) $(BSP)
+SRC         = $(MAIN) #$(BSP)
 
 # === Object list (preserve directories) ===
 OBJ         = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
@@ -25,6 +25,7 @@ CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(MLX_DIR)/include
 # === Libraries ===
 LDFLAGS     = -L$(LIBFT_DIR) -lft \
               -L$(MLX_DIR)/build -lmlx42 \
+              -lglfw \
               -lm \
               -lXext -lX11 \
               -ldl -lpthread
