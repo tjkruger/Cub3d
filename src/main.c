@@ -10,10 +10,12 @@ static void	key_hook(mlx_key_data_t keydata, void *param)
 		mlx_close_window(mlx);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	mlx_t	*mlx;
-
+	
+	if(ac != 2)
+		return(0);
 	mlx = mlx_init(1920, 1080, "cub3d", true);
 	if (!mlx)
 		return (EXIT_FAILURE);
