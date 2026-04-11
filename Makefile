@@ -9,7 +9,9 @@ LIBFT_DIR   = libft
 MLX_DIR     = MLX42
 
 # === Source groups ===
-MAIN        = main.c
+MAIN        =	main.c
+VAL			=	val_ini/file_validation.c
+				val_ini/initialisation.c
 #BSP         = bsp/bsp.c
 
 # Combine all source groups
