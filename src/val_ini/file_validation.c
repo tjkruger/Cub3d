@@ -88,22 +88,38 @@ int	is_map_line(char *line)
 	return (line[i] == '1' || line[i] == '0');
 }
 
-void	make_map_copy(char *line, t_map_data *map)
+int	make_map_copy(char *line, t_map_data *map)
 {
+	static char *all = NULL;
 	int i = 0;
 	if(!line)
 	{
-		write(1, "map copy line error", 19);
-		free(line);
-		exit(1);
+		map->map = ft_split(all, '\n');
+		free(all);
+		return(0);
 	}
-	
+	while(line[i] != '\0')
+	{
+		if(!(line[i] == '0' || line[i] == '1' || line[i] == 'N' || line[i] == 'E' || line[i] == 'S' || line[i] == 'W' || line[i] == ' ' || line[i] == '\n'))
+			break;
+		i++;
+	}	
+	if(line[i] == '\0')
+		all = ft_strjoin(all, line);
+	else
+	{
+		map->map = ft_split(all, '\n');
+		free(all);
+		return(0);
+	}
+	return(1);
 }
 
 void	copy_file_blindly(t_main *main)
 {
 	char	*line;
 	int		headers_found;
+	int		send_line;
 
 	headers_found = 0;
 	line = get_next_line(main->parser->map_fd);
@@ -127,7 +143,13 @@ void	copy_file_blindly(t_main *main)
 		write(2, "Error\nMissing or invalid identifiers in map file\n", 49);
 		exit(1);
 	}
-	make_map_copy(line, main->map_data);
+	send_line = make_map_copy(line, main->map_data);
+	while (send_line && line)
+	{
+		free(line);
+		line = get_next_line(main->parser->map_fd);
+		send_line = make_map_copy(line, main->map_data);
+	}
 	free(line);
 }
 
