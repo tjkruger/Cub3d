@@ -88,6 +88,18 @@ int	is_map_line(char *line)
 	return (line[i] == '1' || line[i] == '0');
 }
 
+void	make_map_copy(char *line, t_map_data *map)
+{
+	int i = 0;
+	if(!line)
+	{
+		write(1, "map copy line error", 19);
+		free(line);
+		exit(1);
+	}
+	
+}
+
 void	copy_file_blindly(t_main *main)
 {
 	char	*line;
@@ -115,7 +127,7 @@ void	copy_file_blindly(t_main *main)
 		write(2, "Error\nMissing or invalid identifiers in map file\n", 49);
 		exit(1);
 	}
-	// line currently holds the first map line — handle map reading next task
+	make_map_copy(line, main->map_data);
 	free(line);
 }
 
@@ -153,12 +165,28 @@ void	parse_colours(t_map_data *map, t_parser *parser)
 {
 	char **s;
 	s = ft_split(parser->ceiling_color, ',');
-	
-	map->ceiling_color = (atoi(s[0]) << 16) | (atoi(s[1]) << 8) | atoi(s[2]);
+	if(s[2] && !s[3] && ft_atoi(s[0]) >= 0 && ft_atoi(s[0]) <= 255 && ft_atoi(s[1]) >= 0 && ft_atoi(s[1]) <= 255 && ft_atoi(s[2]) >= 0 && ft_atoi(s[2]) <= 255)
+		map->ceiling_color = (atoi(s[0]) << 16) | (atoi(s[1]) << 8) | atoi(s[2]);
+	else
+	{
+		write(1, "error in ceiling colour parsing", 31);
+		exit(1);
+	}
+	free(s[0]);
+	free(s[1]);
+	free(s[2]);
 	free(s);
 	s = ft_split(parser->floor_color, ',');
-	//checks for the nums being actually 3 nums below 255
-	map->floor_color = (atoi(s[0]) << 16) | (atoi(s[1]) << 8) | atoi(s[2]);
+	if(s[2] && !s[3] && ft_atoi(s[0]) >= 0 && ft_atoi(s[0]) <= 255 && ft_atoi(s[1]) >= 0 && ft_atoi(s[1]) <= 255 && ft_atoi(s[2]) >= 0 && ft_atoi(s[2]) <= 255)
+		map->floor_color = (atoi(s[0]) << 16) | (atoi(s[1]) << 8) | atoi(s[2]);
+	else
+	{
+		write(1, "error in floor colour parsing", 29);
+		exit(1);
+	}
+	free(s[0]);
+	free(s[1]);
+	free(s[2]);
 	free(s);
 }
 
