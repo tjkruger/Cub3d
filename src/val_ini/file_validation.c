@@ -15,6 +15,7 @@ void	check_extension(char *path)
 	}
 }
 
+//check the input for mistakes
 void	check_args(int ac, char **av, t_parser *parser)
 {
 	if (ac != 2)
@@ -87,7 +88,7 @@ int	is_map_line(char *line)
 	return (line[i] == '1' || line[i] == '0');
 }
 
-void	read_file(t_main *main)
+void	copy_file_blindly(t_main *main)
 {
 	char	*line;
 	int		headers_found;
@@ -118,8 +119,53 @@ void	read_file(t_main *main)
 	free(line);
 }
 
+
+void	validate_textures(t_map_data *map)
+{
+	int i = 0;
+	if(map->north_texture || (i = open(map->north_texture,O_RDONLY)) < 0)
+	{
+		write(1, "north texture wasnt loaded", 26);
+		exit(1);
+	}
+	close(i);
+	if(map->east_texture || (i = open(map->east_texture,O_RDONLY)) < 0)
+	{
+		write(1, "east texture wasnt loaded", 25);
+		exit(1);
+	}
+	close(i);
+	if(map->south_texture || (i = open(map->south_texture,O_RDONLY)) < 0)
+	{
+		write(1, "south texture wasnt loaded", 26);
+		exit(1);
+	}
+	close(i);
+	if(map->west_texture || (i = open(map->west_texture,O_RDONLY)) < 0)
+	{
+		write(1, "west texture wasnt loaded", 25);
+		exit(1);
+	}
+	close(i);
+}
+
+void	parse_colours(t_map_data *map, t_parser *parser)
+{
+	char **s;
+	s = ft_split(parser->ceiling_color, ',');
+	
+	map->ceiling_color = (atoi(s[0]) << 16) | (atoi(s[1]) << 8) | atoi(s[2]);
+	free(s);
+	s = ft_split(parser->floor_color, ',');
+	//checks for the nums being actually 3 nums below 255
+	map->floor_color = (atoi(s[0]) << 16) | (atoi(s[1]) << 8) | atoi(s[2]);
+	free(s);
+}
+
 void	parse(int ac, char **av, t_main *main)
 {
 	check_args(ac, av, main->parser);
-	read_file(main);
+	copy_file_blindly(main);
+	validate_textures(main->map_data);
+	parse_colours(main->map_data, main->parser);
 }
