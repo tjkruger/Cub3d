@@ -41,3 +41,8 @@ static void set_player_orientation(t_main *main)
         main->player->plane = (t_vec){0.0f, -0.66f};
     }
 }
+
+static void set_player_speed(t_main *main)
+{
+    main->player->speed = 0.05f; // placeholder
+}
