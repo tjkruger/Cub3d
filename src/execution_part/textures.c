@@ -11,15 +11,25 @@ void load_textures(t_main *main)
     main->textures[2] = mlx_load_png(main->map_data->east_texture);
     main->textures[3] = mlx_load_png(main->map_data->west_texture);
     i = 0;
+    int j;
     while (i < 4)
     {
         if (!main->textures[i])
         {
-            error_exit("Failed to load texture");
-            main->textures[i] = NULL;
+            j = i;
+            while (j >= 0)
+            {
+                if (main->textures[j])
+                {
+                    mlx_delete_texture(main->textures[j]);
+                    main->textures[j] = NULL;
+                }
+                j--;
+            }
         }
-        i++;
+        error_exit("Failed to load texture");
     }
+    i++;
 }
 
 void free_textures(t_main *main)
