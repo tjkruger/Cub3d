@@ -115,6 +115,40 @@ int	make_map_copy(char *line, t_map_data *map)
 	return(1);
 }
 
+void	get_height_and_length(t_map_data *map)
+{
+	int i = 0;
+	int j = 0;
+	int len = 0;
+	int p_counter = 0;
+	while(map->map[i] != NULL)
+	{
+		while(map->map[i][j] != '\0')
+		{
+			if(map->map[i][j] == 'N' || map->map[i][j] == 'E' || map->map[i][j] == 'S' || map->map[i][j] == 'W')
+			{
+				if(p_counter > 1)
+				{
+					write(1, "multiple player pos", 19);
+					exit(1);
+				}
+				map->player_orientation = map->map[i][j];
+				map->player_pos.x = j;
+				map->player_pos.y = i;
+				p_counter++;
+			}
+			j++;
+		}
+		if(j > len)
+			len = j;
+		j = 0;
+		i++;
+	}
+	map->map_height = i;
+	map->map_width = len;
+}
+
+
 void	copy_file_blindly(t_main *main)
 {
 	char	*line;
@@ -151,6 +185,7 @@ void	copy_file_blindly(t_main *main)
 		send_line = make_map_copy(line, main->map_data);
 	}
 	free(line);
+	get_height_and_length(main->map_data);
 }
 
 
@@ -212,10 +247,47 @@ void	parse_colours(t_map_data *map, t_parser *parser)
 	free(s);
 }
 
+void floodfill(char **map, int x, int y)
+{
+    if (map[y][x] == '1' || map[y][x] == 'V')
+        return;
+    map[y][x] = 'V';
+    floodfill(map, x + 1, y);
+    floodfill(map, x - 1, y);
+    floodfill(map, x, y + 1);
+    floodfill(map, x, y - 1);
+}
+
+char **copy_map(char **original)
+{
+	char **new;
+	int i = 0;
+	int j = 0;
+
+	while(original[i] != '\0')
+	{
+		j = 0;
+		while(original[i][j] != '\0')
+		{
+			new[i][j] == original[i][j];
+			j++;
+		}
+		i++;
+	}
+	return(new);
+}
+
+void	validate_map(t_map_data *map)
+{
+	char **cpy;
+	cpy = copy_map(map->map);
+}
+
 void	parse(int ac, char **av, t_main *main)
 {
 	check_args(ac, av, main->parser);
 	copy_file_blindly(main);
 	validate_textures(main->map_data);
 	parse_colours(main->map_data, main->parser);
+	validate_map(main->map_data);
 }
