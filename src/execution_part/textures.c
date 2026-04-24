@@ -1,5 +1,18 @@
 #include "../include/cub3d.h"
 
+static void clear_loaded_textures(t_main *main, int last_index)
+{
+    while (last_index >= 0)
+    {
+        if (main->textures[last_index])
+        {
+            mlx_delete_texture(main->textures[last_index]);
+            main->textures[last_index] = NULL;
+        }
+        last_index--;
+    }
+}
+
 void load_textures(t_main *main)
 {
     int i;
@@ -11,25 +24,15 @@ void load_textures(t_main *main)
     main->textures[2] = mlx_load_png(main->map_data->east_texture);
     main->textures[3] = mlx_load_png(main->map_data->west_texture);
     i = 0;
-    int j;
     while (i < 4)
     {
         if (!main->textures[i])
         {
-            j = i;
-            while (j >= 0)
-            {
-                if (main->textures[j])
-                {
-                    mlx_delete_texture(main->textures[j]);
-                    main->textures[j] = NULL;
-                }
-                j--;
-            }
+            clear_loaded_textures(main, i - 1);
+            error_exit("Failed to load texture");
         }
-        error_exit("Failed to load texture");
+        i++;
     }
-    i++;
 }
 
 void free_textures(t_main *main)

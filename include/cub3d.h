@@ -132,4 +132,11 @@ void				end_game(t_main *main);
 // free.c
 void				free_all(t_main *main);
 
+// init.c
+void				init_player(t_main *main);
+
+// textures.c
+void				load_textures(t_main *main);
+void				free_textures(t_main *main);
+
 #endif
