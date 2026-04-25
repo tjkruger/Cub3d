@@ -28,7 +28,27 @@ void				end_game(t_main *main)
 
 bool init_game(t_main *main)
 {
+    if (!main)
+        return false;
     main->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
+    if (!main->mlx)
+        return false;
+    main->image = mlx_new_image(main->mlx, WIDTH, HEIGHT);
+    if (!main->image)    
+    {
+        mlx_terminate(main->mlx);
+        main->mlx = NULL;
+        return false;
+    }
+    if (mlx_image_to_window(main->mlx, main->image, 0, 0) < 0)
+    {
+        mlx_delete_image(main->mlx, main->image);
+        main->image = NULL;
+        mlx_terminate(main->mlx);
+        main->mlx = NULL;
+        return false;
+    }
+    return true;
 }
 
 static void key_hook(mlx_key_data_t keydata, void *param)
@@ -53,10 +73,10 @@ static void frame_hook(void *param)
         x = 0;
         while (x < main->mlx->width)
         {
-            if (y < main->mlx->height / 2) 
-                main->image->pixels[y * main->mlx->width + x] = ceiling;
+            if (y < main->mlx->height / 2)
+                put_pixel_rgba(main->image, x, y, ceiling);
             else
-                main->image->pixels[y * main->mlx->width + x] = floor;
+                put_pixel_rgba(main->image, x, y, floor);
             x++;
         }
         y++;
