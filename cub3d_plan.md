@@ -7,60 +7,26 @@ The handoff point is `t_main` — Person A fills it, Person B reads from it.
 
 ## Person A — Parser, Validation & Memory
 
-### 1. Argument Checking
-- Verify exactly 2 arguments are passed (`ac == 2`)
-- Check the file has a `.cub` extension
-- Check the file exists and can be opened with `open()`
-- Exit with a clean error message on any failure
+# Cub3D - Remaining Tasks
 
-### 2. Reading the .cub File
-- Open the fd and read line by line (using your libft `get_next_line`)
-- Identify and store the 6 header identifiers: `NO`, `SO`, `WE`, `EA`, `F`, `C`
-- Handle any order of identifiers — the spec does not guarantee order
-- Detect when the header section ends and the map begins
-- Store raw data into `t_parser` before doing any validation
+## To Do
 
-### 3. Texture Path Validation
-- Check all 4 texture paths (`NO`, `SO`, `WE`, `EA`) are present
-- Verify each path points to a file that actually exists and can be opened
-- Store validated paths into `t_map_data->north/south/east/west_texture`
+### 1. `get_height_and_length`
+- Push it from laptop after battery swap
+- Add the call in `parse` between `copy_file_blindly` and `validate_map`
 
-### 4. Color Parsing
-- Parse `F` and `C` values from the format `R,G,B`
-- Validate each component is in range 0–255
-- Pack into a single `int` as `(R << 16) | (G << 8) | B` — this matches MLX42's format
-- Store into `t_map_data->floor_color` and `t_map_data->ceiling_color`
+### 2. Fix `validate_textures`
+- `||` needs to be `!... ||` otherwise segfaults on NULL texture pointers
 
-### 5. Map Extraction
-- After the header, everything remaining is the map
-- Copy raw map lines into `t_parser->map_copy`
-- Trim trailing newlines but preserve internal spaces (spaces are valid floor tiles)
-- Store the dimensions into `t_map_data->map_width` and `t_map_data->map_height`
+### 3. Fix `initialise`
+- malloc `parser` and `map_data` inside it — currently just NULLed which causes segfault
 
-### 6. Map Validation
-- Valid characters are only: `0`, `1`, `N`, `S`, `E`, `W`, ` ` (space)
-- Exactly one player spawn character (`N`, `S`, `E`, or `W`) must exist
-- Record spawn position into `t_map_data->player_pos` and orientation into `t_map_data->player_orientation`
-- The map must be fully enclosed by walls — flood fill or border-check approach both work
-  - Simplest: any `0` or player tile that touches the edge of the array is an error
-  - Robust: flood fill from player position, fail if you reach a space or the array boundary
+### 4. Error Handling
+- Every `exit(1)` needs to call `free_all` before it
+- No leaks on any exit path
 
-### 7. `init_structs()`
-- Allocate and zero `t_main` and all its sub-structs
-- Return a fully zeroed `t_main *` ready for the parser to fill
-- Any `malloc` failure should free everything allocated so far and exit cleanly
-
-### 8. `free_all()`
-- Free every field in `t_map_data` (texture strings, map array)
-- Free `t_parser` internals
-- Free `t_player`, `t_main`
-- Must be safe to call at any point, even on a partially filled struct (null-check before freeing)
-
-### 9. Error Handling
-- All errors print to `stderr` with `write(2, ...)` or `ft_putendl_fd`
-- Always call `free_all()` before any `exit(1)`
-- No memory leaks on any exit path — check with valgrind
-
+### 5. Valgrind Check
+- Run valgrind and confirm no leaks on any exit path
 ---
 
 ## Person B — Rendering, Raycasting & Game Loop
