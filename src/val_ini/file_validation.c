@@ -127,7 +127,7 @@ void	get_height_and_length(t_map_data *map)
 		{
 			if(map->map[i][j] == 'N' || map->map[i][j] == 'E' || map->map[i][j] == 'S' || map->map[i][j] == 'W')
 			{
-				if(p_counter > 1)
+				if(p_counter > 0)
 				{
 					write(1, "multiple player pos", 19);
 					exit(1);
@@ -192,25 +192,25 @@ void	copy_file_blindly(t_main *main)
 void	validate_textures(t_map_data *map)
 {
 	int i = 0;
-	if(map->north_texture || (i = open(map->north_texture,O_RDONLY)) < 0)
+	if(!map->north_texture || (i = open(map->north_texture,O_RDONLY)) < 0)
 	{
 		write(1, "north texture wasnt loaded", 26);
 		exit(1);
 	}
 	close(i);
-	if(map->east_texture || (i = open(map->east_texture,O_RDONLY)) < 0)
+	if(!map->east_texture || (i = open(map->east_texture,O_RDONLY)) < 0)
 	{
 		write(1, "east texture wasnt loaded", 25);
 		exit(1);
 	}
 	close(i);
-	if(map->south_texture || (i = open(map->south_texture,O_RDONLY)) < 0)
+	if(!map->south_texture || (i = open(map->south_texture,O_RDONLY)) < 0)
 	{
 		write(1, "south texture wasnt loaded", 26);
 		exit(1);
 	}
 	close(i);
-	if(map->west_texture || (i = open(map->west_texture,O_RDONLY)) < 0)
+	if(!map->west_texture || (i = open(map->west_texture,O_RDONLY)) < 0)
 	{
 		write(1, "west texture wasnt loaded", 25);
 		exit(1);
