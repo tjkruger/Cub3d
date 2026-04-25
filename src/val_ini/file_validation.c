@@ -88,7 +88,7 @@ int	is_map_line(char *line)
 	return (line[i] == '1' || line[i] == '0');
 }
 
-int	make_map_copy(char *line, t_map_data *map)
+int	make_map(char *line, t_map_data *map)
 {
 	static char *all = NULL;
 	int i = 0;
@@ -143,12 +143,12 @@ void	copy_file_blindly(t_main *main)
 		write(2, "Error\nMissing or invalid identifiers in map file\n", 49);
 		exit(1);
 	}
-	send_line = make_map_copy(line, main->map_data);
+	send_line = make_map(line, main->map_data);
 	while (send_line && line)
 	{
 		free(line);
 		line = get_next_line(main->parser->map_fd);
-		send_line = make_map_copy(line, main->map_data);
+		send_line = make_map(line, main->map_data);
 	}
 	free(line);
 }
@@ -212,10 +212,85 @@ void	parse_colours(t_map_data *map, t_parser *parser)
 	free(s);
 }
 
+char **make_map_copy(char **map, int height)
+{
+    char **copy;
+    int i = 0;
+    int j = 0;
+
+    copy = malloc(sizeof(char *) * (height + 1));
+    while(height > i)
+    {
+        j = 0;
+        copy[i] = malloc(sizeof(char) * (ft_strlen(map[i]) + 1));
+        while(map[i][j] != '\0')
+        {
+            copy[i][j] = map[i][j];
+            j++;
+        }
+        copy[i][j] = '\0';
+        i++;
+    }
+    copy[i] = NULL;
+    return(copy);
+}
+
+void floodfill(char **map, int x, int y, int width, int height)
+{
+    if (y < 0 || y >= height || x < 0 || x >= width)
+    {
+        write(2, "Error\nMap is not enclosed\n", 25);
+        exit(1);
+    }
+    if (map[y][x] == '1' || map[y][x] == 'V')
+        return;
+    if (map[y][x] == ' ')
+    {
+        write(2, "Error\nMap is not enclosed\n", 25);
+        exit(1);
+    }
+    map[y][x] = 'V';
+    floodfill(map, x + 1, y, width, height);
+    floodfill(map, x - 1, y, width, height);
+    floodfill(map, x, y + 1, width, height);
+    floodfill(map, x, y - 1, width, height);
+}
+
+void    validate_map(t_map_data *map_data)
+{
+    char    **copy;
+    int     x;
+    int     y;
+
+    copy = make_map_copy(map_data->map, map_data->map_height);
+    floodfill(copy, map_data->player_pos.x, map_data->player_pos.y,
+              map_data->map_width, map_data->map_height);
+    y = 0;
+    while (copy[y])
+    {
+        x = 0;
+        while (copy[y][x])
+        {
+            if (copy[y][x] == '0')
+            {
+                write(2, "Error\nMap has unreachable areas\n", 32);
+                exit(1);
+            }
+            x++;
+        }
+        y++;
+    }
+    y = 0;
+    while (copy[y])
+        free(copy[y++]);
+    free(copy);
+}
+
 void	parse(int ac, char **av, t_main *main)
 {
 	check_args(ac, av, main->parser);
 	copy_file_blindly(main);
 	validate_textures(main->map_data);
 	parse_colours(main->map_data, main->parser);
+    validate_map(main->map_data);
 }
