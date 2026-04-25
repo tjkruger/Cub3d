@@ -119,17 +119,12 @@ typedef struct s_main
 /*   Function prototypes - fill these in as you go                            */
 /* ************************************************************************** */
 
-// init.c
-t_main				*init_structs(void);
-
-// parse.c
-void				parse(int ac, char **av, t_main *main);
-
 // game.c
 void				run_game(t_main *main);
 void				end_game(t_main *main);
 
 // free.c
 void				free_all(t_main *main);
+void				exit_error(char *msg, t_main *main);
 
 #endif

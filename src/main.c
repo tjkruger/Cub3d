@@ -12,6 +12,15 @@ static void	key_hook(mlx_key_data_t keydata, void *param)
 		mlx_close_window(mlx);
 }
 
+void exit_error(char *msg, t_main *main)
+{
+    write(2, "Error\n", 6);
+    write(2, msg, ft_strlen(msg));
+    if (main)
+        free_all(main);
+    exit(1);
+}
+
 int	main(int ac, char **av)
 {
 	mlx_t	*mlx;
