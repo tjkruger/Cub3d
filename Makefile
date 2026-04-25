@@ -10,8 +10,10 @@ MLX_DIR     = MLX42
 
 # === Source groups ===
 MAIN        =	main.c
-VAL			=	val_ini/file_validation.c
-				val_ini/initialisation.c
+VAL			=	val_ini/file_validation.c \
+				val_ini/initialisation.c \
+				val_ini/check_map.c \
+				val_ini/file_parsing.c
 #BSP         = bsp/bsp.c
 
 # Combine all source groups
