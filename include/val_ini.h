@@ -1,7 +1,5 @@
-#ifndef VAL_INI.H
-# define VAL_INI.H
-
-#include "cub3d.h"
+#ifndef VAL_INI_H
+# define VAL_INI_H
 
 
 //file validation

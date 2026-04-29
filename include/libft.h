@@ -43,7 +43,7 @@ char				*ft_strnstr(const char *mstr, const char *sstr, int len);
 void				*ft_memchr(const void *s, int c, int n);
 int					ft_atoi(const char *str);
 void				*ft_calloc(int num, int size);
-char				*ft_strdup(const char *s1);
+char				*ft_strdup(char *s1);
 char				*ft_substr(const char *s, unsigned int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2);
 char				*ft_strtrim(char const *s1, char const *set);

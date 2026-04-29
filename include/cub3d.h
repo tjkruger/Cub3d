@@ -115,6 +115,9 @@ typedef struct s_main
 	mlx_texture_t	*textures[4];
 }					t_main;
 
+# include "get_next_line.h"
+# include "val_ini.h"
+
 /* ************************************************************************** */
 /*   Function prototypes - fill these in as you go                            */
 /* ************************************************************************** */

@@ -11,16 +11,6 @@ The handoff point is `t_main` — Person A fills it, Person B reads from it.
 
 ## To Do
 
-### 1. `get_height_and_length`
-- Push it from laptop after battery swap
-- Add the call in `parse` between `copy_file_blindly` and `validate_map`
-
-### 2. Fix `validate_textures`
-- `||` needs to be `!... ||` otherwise segfaults on NULL texture pointers
-
-### 3. Fix `initialise`
-- malloc `parser` and `map_data` inside it — currently just NULLed which causes segfault
-
 ### 4. Error Handling
 - Every `exit(1)` needs to call `free_all` before it
 - No leaks on any exit path

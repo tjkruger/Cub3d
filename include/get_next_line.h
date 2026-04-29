@@ -19,8 +19,9 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "libft.h"
 
-size_t	ft_strlen(const char *s);
+//size_t	ft_strlen(const char *s);
 char	*ft_strdup(char *s1);
 char	*get_next_line(int fd);
 

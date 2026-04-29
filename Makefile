@@ -13,11 +13,13 @@ MAIN        =	main.c
 VAL			=	val_ini/file_validation.c \
 				val_ini/initialisation.c \
 				val_ini/check_map.c \
-				val_ini/file_parsing.c
+				val_ini/file_parsing.c 
+GNL         =	../GNL/get_next_line.c \
+                ../GNL/get_next_line_utils.c
 #BSP         = bsp/bsp.c
 
 # Combine all source groups
-SRC         = $(MAIN) #$(BSP)
+SRC         = $(MAIN) $(VAL) $(GNL)
 
 # === Object list (preserve directories) ===
 OBJ         = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
@@ -45,8 +47,13 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $(NAME)
 	@echo "$(NAME) built successfully!"
 
-# === Pattern rule for all .c files ===
+# === Pattern rule for src .c files ===
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# === Pattern rule for GNL .c files ===
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -64,11 +71,15 @@ run: $(NAME)
 # === Clean ===
 clean:
 	@rm -rf $(OBJ_DIR)
+	@rm -rf GNL/get_next_line.o
+	@rm -rf GNL/get_next_line_utils.o
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@echo "Objects cleaned."
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -rf GNL/get_next_line.o
+	@rm -rf GNL/get_next_line_utils.o
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@rm -rf $(MLX_DIR)/build
 	@echo "Full clean done."
