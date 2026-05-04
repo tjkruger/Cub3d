@@ -105,6 +105,11 @@ void perform_dda(t_main *main, t_ray *ray)
 
 void calculate_wall_distance(t_main *main, t_ray *ray, int column)
 {
-
+    if (!main || !ray || !main->player)
+        return;
+    if (ray->side == 0)
+        ray->perp_wall_dist = (ray->side_dist.x - ray->delta_dist.x);
+    else
+        ray->perp_wall_dist = (ray->side_dist.y - ray->delta_dist.y);
+    ray->perp_wall_dist = 
 }
-
