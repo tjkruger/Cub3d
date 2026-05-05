@@ -10,10 +10,18 @@ MLX_DIR     = MLX42
 
 # === Source groups ===
 MAIN        = main.c
-#BSP         = bsp/bsp.c
+EXEC_PART   = execution_part/casting.c \
+              execution_part/free.c \
+              execution_part/game.c \
+              execution_part/game_helper.c \
+              execution_part/init_player.c \
+              execution_part/textures.c
+COPILOT     = copilot_code/parse.c \
+              copilot_code/helpers.c \
+              copilot_code/error.c
 
 # Combine all source groups
-SRC         = $(MAIN) #$(BSP)
+SRC         = $(MAIN) $(EXEC_PART) $(COPILOT)
 
 # === Object list (preserve directories) ===
 OBJ         = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
@@ -25,10 +33,11 @@ CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(MLX_DIR)/include
 # === Libraries ===
 LDFLAGS     = -L$(LIBFT_DIR) -lft \
               -L$(MLX_DIR)/build -lmlx42 \
-              -lglfw \
+              -L$(MLX_DIR)/build/_deps/glfw-build/src -lglfw3 \
               -lm \
-              -lXext -lX11 \
-              -ldl -lpthread
+              -framework Cocoa \
+              -framework OpenGL \
+              -framework IOKit
 
 # === Default target ===
 all: $(NAME)
@@ -50,25 +59,20 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-# === Bonus ===
-bonus: all
-
-# === Run ===
-run: $(NAME)
-	./$(NAME)
-
 # === Clean ===
 clean:
-	@rm -rf $(OBJ_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -rf $(OBJ_DIR)
 	@echo "Objects cleaned."
 
+# === Full clean ===
 fclean: clean
-	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
-	@rm -rf $(MLX_DIR)/build
-	@echo "Full clean done."
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
+	@echo "Everything cleaned."
 
+# === Rebuild ===
 re: fclean all
 
-.PHONY: all clean fclean re run bonus
+# === Phony targets ===
+.PHONY: all clean fclean re

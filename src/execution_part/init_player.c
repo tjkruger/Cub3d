@@ -4,6 +4,8 @@ static void set_player_position(t_main *main);
 static void set_player_orientation(t_main *main);
 static void set_player_speed(t_main *main);
 
+/// @brief Allocates and initializes all main game structures
+/// @return Pointer to the newly allocated main structure, or NULL on failure
 t_main	*init_structs(void)
 {
     t_main	*main;
@@ -25,6 +27,8 @@ t_main	*init_structs(void)
     return (main);
 }
 
+/// @brief Initializes the player with position, orientation, and speed
+/// @param main Pointer to the main game structure
 void init_player(t_main *main)
 {
     if (!main || !main->map_data || !main->player)
@@ -34,12 +38,16 @@ void init_player(t_main *main)
     set_player_speed(main);
 }
 
+/// @brief Sets the player's position based on map data
+/// @param main Pointer to the main game structure
 static void set_player_position(t_main *main)
 {
     main->player->pos.x = (float)main->map_data->player_pos.x + 0.5f;
     main->player->pos.y = (float)main->map_data->player_pos.y + 0.5f;
 }
 
+/// @brief Sets the player's direction and camera plane based on orientation
+/// @param main Pointer to the main game structure
 static void set_player_orientation(t_main *main)
 {
     if (main->map_data->player_orientation == 'N')
@@ -66,6 +74,8 @@ static void set_player_orientation(t_main *main)
         error_exit("Invalid player orientation in map data");
 }
 
+/// @brief Sets the player's movement speed
+/// @param main Pointer to the main game structure
 static void set_player_speed(t_main *main)
 {
     main->player->speed = 0.05f; // placeholder

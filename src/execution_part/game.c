@@ -1,5 +1,10 @@
 #include "../include/cub3d.h"
 
+static void key_hook(mlx_key_data_t keydata, void *param);
+static void frame_hook(void *param);
+
+/// @brief Initializes the game and starts the main loop
+/// @param main Pointer to the main game structure
 void				run_game(t_main *main)
 {
     if (!main)
@@ -14,6 +19,8 @@ void				run_game(t_main *main)
     mlx_loop(main->mlx);
 }
 
+/// @brief Cleans up and terminates the game
+/// @param main Pointer to the main game structure
 void				end_game(t_main *main)
 {
     if(!main)
@@ -26,6 +33,9 @@ void				end_game(t_main *main)
     free_all(main);
 }
 
+/// @brief Initializes the MLX window and framebuffer image
+/// @param main Pointer to the main game structure
+/// @return true on success, false on failure
 bool init_game(t_main *main)
 {
     if (!main)
@@ -51,11 +61,17 @@ bool init_game(t_main *main)
     return true;
 }
 
+/// @brief Handles keyboard input events
+/// @param keydata Keyboard event data
+/// @param param User parameter (pointer to t_main)
 static void key_hook(mlx_key_data_t keydata, void *param)
 {
-
+	(void)keydata;
+	(void)param;
 }
 
+/// @brief Called every frame to render the game
+/// @param param User parameter (pointer to t_main)
 static void frame_hook(void *param)
 {
     t_main *main;
@@ -81,4 +97,5 @@ static void frame_hook(void *param)
         }
         y++;
     }
+    casting_loop(main);
 }

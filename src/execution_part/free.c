@@ -1,5 +1,7 @@
 #include "../include/cub3d.h"
 
+/// @brief Frees all strings in an array and the array itself
+/// @param array Pointer to the string array to free
 static void free_str_array(char **array)
 {
     int i;
@@ -15,6 +17,8 @@ static void free_str_array(char **array)
     free(array);
 }
 
+/// @brief Frees all memory allocated by the parser structure
+/// @param parser Pointer to the parser structure to free
 static void free_parser(t_parser *parser)
 {
     if (!parser)
@@ -26,6 +30,8 @@ static void free_parser(t_parser *parser)
     free(parser);
 }
 
+/// @brief Frees all memory allocated by the map data structure
+/// @param map_data Pointer to the map data structure to free
 static void free_map_data(t_map_data *map_data)
 {
     if (!map_data)
@@ -38,6 +44,8 @@ static void free_map_data(t_map_data *map_data)
     free(map_data);
 }
 
+/// @brief Frees all allocated memory in the main structure
+/// @param main Pointer to the main game structure to free
 void free_all(t_main *main)
 {
     if (!main)

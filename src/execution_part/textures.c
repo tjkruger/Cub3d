@@ -1,5 +1,8 @@
 #include "../include/cub3d.h"
 
+/// @brief Clears all loaded textures up to the specified index
+/// @param main Pointer to the main games structure
+/// @param last_index 
 static void clear_loaded_textures(t_main *main, int last_index)
 {
     while (last_index >= 0)
@@ -13,6 +16,8 @@ static void clear_loaded_textures(t_main *main, int last_index)
     }
 }
 
+/// @brief Loads all wall textures from map data
+/// @param main Pointer to the main game structure
 void load_textures(t_main *main)
 {
     int i;
@@ -35,6 +40,8 @@ void load_textures(t_main *main)
     }
 }
 
+/// @brief Frees all loaded textures from memory
+/// @param main Pointer to the main game structure
 void free_textures(t_main *main)
 {
     int i;
