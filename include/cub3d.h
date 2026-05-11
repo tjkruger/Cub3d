@@ -11,6 +11,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -125,9 +126,43 @@ typedef struct s_main
 // game.c
 void				run_game(t_main *main);
 void				end_game(t_main *main);
+bool				init_game(t_main *main);
+
+// game_helper.c
+uint32_t			rgb_to_rgba(int rgb);
+void				put_pixel_rgba(mlx_image_t *img, int x, int y, uint32_t color);
 
 // free.c
 void				free_all(t_main *main);
 void				exit_error(char *msg, t_main *main);
+
+// init.c
+void				init_player(t_main *main);
+
+// textures.c
+void				load_textures(t_main *main);
+void				free_textures(t_main *main);
+
+// casting.c
+void				casting_loop(t_main *main);
+void				cast_single_ray(t_main *main, t_ray *ray, int x);
+void				init_step_and_side_dist(t_main *main, t_ray *ray);
+void				perform_dda(t_main *main, t_ray *ray);
+void				calculate_wall_distance(t_main *main, t_ray *ray, int column);
+
+// error.c
+void				error_exit(const char *message);
+
+/* ************************************************************************** */
+/*   Libft declarations (minimal subset)                                       */
+/* ************************************************************************** */
+int					ft_strlen(const char *s);
+int					ft_atoi(const char *str);
+char				*ft_strdup(const char *s1);
+char				*ft_strtrim(char const *s1, char const *set);
+int					ft_strncmp(const char *s1, const char *s2, size_t n);
+char				**ft_split(char const *s, char c);
+void				ft_free_split(char **split);
+char				*get_next_line(int fd);
 
 #endif

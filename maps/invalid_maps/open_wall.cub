@@ -1,0 +1,17 @@
+NW ./textures/north_wall.png
+SW ./textures/south_wall.png
+WW ./textures/west_wall.png
+EW ./textures/east_wall.png
+
+F 255, 0, 0
+C 0, 255, 0
+
+11111011111
+10000000001
+10000000001
+10000000001
+10000N00001
+10000000001
+10000000001
+10000000001
+11111111111

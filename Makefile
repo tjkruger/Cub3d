@@ -9,7 +9,17 @@ LIBFT_DIR   = libft
 MLX_DIR     = MLX42
 
 # === Source groups ===
-MAIN        =	main.c
+MAIN        = main.c
+EXEC_PART   = execution_part/casting.c \
+              execution_part/free.c \
+              execution_part/game.c \
+              execution_part/game_helper.c \
+              execution_part/init_player.c \
+              execution_part/textures.c
+COPILOT     = copilot_code/parse.c \
+              copilot_code/helpers.c \
+              copilot_code/error.c
+
 VAL			=	val_ini/file_validation.c \
 				val_ini/initialisation.c \
 				val_ini/check_map.c \
@@ -19,6 +29,7 @@ GNL         =	../GNL/get_next_line.c \
 #BSP         = bsp/bsp.c
 
 # Combine all source groups
+SRC         = $(MAIN) $(EXEC_PART) $(COPILOT)
 SRC         = $(MAIN) $(VAL) $(GNL)
 
 # === Object list (preserve directories) ===
@@ -31,10 +42,11 @@ CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(MLX_DIR)/include
 # === Libraries ===
 LDFLAGS     = -L$(LIBFT_DIR) -lft \
               -L$(MLX_DIR)/build -lmlx42 \
-              -lglfw \
+              -L$(MLX_DIR)/build/_deps/glfw-build/src -lglfw3 \
               -lm \
-              -lXext -lX11 \
-              -ldl -lpthread
+              -framework Cocoa \
+              -framework OpenGL \
+              -framework IOKit
 
 # === Default target ===
 all: $(NAME)
@@ -61,22 +73,21 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-# === Bonus ===
-bonus: all
-
-# === Run ===
-run: $(NAME)
-	./$(NAME)
-
 # === Clean ===
 clean:
+	$(MAKE) -C $(LIBFT_DIR) clean
+	rm -rf $(OBJ_DIR)
 	@rm -rf $(OBJ_DIR)
 	@rm -rf GNL/get_next_line.o
 	@rm -rf GNL/get_next_line_utils.o
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@echo "Objects cleaned."
 
+# === Full clean ===
 fclean: clean
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
+	@echo "Everything cleaned."
 	@rm -f $(NAME)
 	@rm -rf GNL/get_next_line.o
 	@rm -rf GNL/get_next_line_utils.o
@@ -84,6 +95,8 @@ fclean: clean
 	@rm -rf $(MLX_DIR)/build
 	@echo "Full clean done."
 
+# === Rebuild ===
 re: fclean all
 
-.PHONY: all clean fclean re run bonus
+# === Phony targets ===
+.PHONY: all clean fclean re
