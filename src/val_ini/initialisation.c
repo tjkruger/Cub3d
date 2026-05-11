@@ -18,11 +18,11 @@ t_main *initialise()
     t_main *main = malloc(sizeof(t_main));
     if(!main)
         return(NULL);
-    main->parser        = NULL;
-    main->image         = NULL;
-    main->map_data      = NULL;
-    main->mlx           = NULL;
-    main->player        = NULL;
+    main->parser        = malloc(sizeof(t_parser));
+    //main->image         = malloc(sizeof(t_image));
+    main->map_data      = malloc(sizeof(t_map_data));
+    //main->mlx           = malloc(sizeof(t_mlx));
+    main->player        = malloc(sizeof(t_player));
     while(i < 4)
     {
         main->textures[i]   = NULL;

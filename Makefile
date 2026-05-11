@@ -43,10 +43,10 @@ CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(MLX_DIR)/include
 LDFLAGS     = -L$(LIBFT_DIR) -lft \
               -L$(MLX_DIR)/build -lmlx42 \
               -L$(MLX_DIR)/build/_deps/glfw-build/src -lglfw3 \
-              -lm \
-              -framework Cocoa \
-              -framework OpenGL \
-              -framework IOKit
+              -lm -ldl -lpthread -lglfw
+#               -framework Cocoa \
+#               -framework OpenGL \
+#               -framework IOKit
 
 # === Default target ===
 all: $(NAME)

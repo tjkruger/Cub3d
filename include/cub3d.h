@@ -156,13 +156,13 @@ void				error_exit(const char *message);
 /* ************************************************************************** */
 /*   Libft declarations (minimal subset)                                       */
 /* ************************************************************************** */
-int					ft_strlen(const char *s);
-int					ft_atoi(const char *str);
-char				*ft_strdup(const char *s1);
-char				*ft_strtrim(char const *s1, char const *set);
-int					ft_strncmp(const char *s1, const char *s2, size_t n);
-char				**ft_split(char const *s, char c);
-void				ft_free_split(char **split);
-char				*get_next_line(int fd);
+// int					ft_strlen(const char *s);
+// int					ft_atoi(const char *str);
+// char				*ft_strdup(const char *s1);
+// char				*ft_strtrim(char const *s1, char const *set);
+// int					ft_strncmp(const char *s1, const char *s2, size_t n);
+// char				**ft_split(char const *s, char c);
+// void				ft_free_split(char **split);
+// char				*get_next_line(int fd);
 
 #endif
