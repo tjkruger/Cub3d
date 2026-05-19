@@ -29,8 +29,7 @@ GNL         =	../GNL/get_next_line.c \
 #BSP         = bsp/bsp.c
 
 # Combine all source groups
-SRC         = $(MAIN) $(EXEC_PART) $(COPILOT)
-SRC         = $(MAIN) $(VAL) $(GNL)
+SRC         = $(MAIN) $(EXEC_PART) $(VAL) $(GNL)
 
 # === Object list (preserve directories) ===
 OBJ         = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
@@ -43,10 +42,10 @@ CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(MLX_DIR)/include
 LDFLAGS     = -L$(LIBFT_DIR) -lft \
               -L$(MLX_DIR)/build -lmlx42 \
               -L$(MLX_DIR)/build/_deps/glfw-build/src -lglfw3 \
-              -lm -ldl -lpthread -lglfw
-#               -framework Cocoa \
-#               -framework OpenGL \
-#               -framework IOKit
+			  -lm \
+			  -framework Cocoa \
+			  -framework OpenGL \
+			  -framework IOKit
 
 # === Default target ===
 all: $(NAME)

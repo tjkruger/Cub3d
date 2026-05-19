@@ -23,7 +23,6 @@ static void free_parser(t_parser *parser)
 {
     if (!parser)
         return;
-    free(parser->map_path);
     free_str_array(parser->map_copy);
     free(parser->floor_color);
     free(parser->ceiling_color);
@@ -54,4 +53,12 @@ void free_all(t_main *main)
     free_map_data(main->map_data);
     free(main->player);
     free(main);
+}
+
+void error_exit(const char *message)
+{
+    write(2, "Error\n", 6);
+    if (message)
+        write(2, message, ft_strlen(message));
+    exit(1);
 }
