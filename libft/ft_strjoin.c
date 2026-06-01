@@ -12,55 +12,56 @@
 
 #include <stdlib.h>
 
-size_t	ft_combined_strlen(const char *s1, const char *s2)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	size_t	len1;
-	size_t	len2;
+	int	i;
+
+	i = 0;
+	if (!src)
+		return (dst);
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+static int	ft_strlen(const char *str)
+{
+	int	length;
+
+	length = 0;
+	while (str[length] != '\0')
+	{
+		length++;
+	}
+	return (length);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*str;
+	int		len1;
+	int		len2;
 
 	len1 = 0;
 	len2 = 0;
-	while (s1[len1] != '\0')
-	{
-		len1++;
-	}
-	while (s2[len2] != '\0')
-	{
-		len2++;
-	}
-	return (len1 + len2 + 1);
-}
-
-void	ft_strcopy(char *new_str, const char *s1, const char *s2)
-{
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	while (s1 && s1[i] != '\0')
-	{
-		new_str[i] = s1[i];
-		i++;
-	}
-	while (s2 && s2[j] != '\0')
-	{
-		new_str[i + j] = s2[j];
-		j++;
-	}
-	new_str[i + j] = '\0';
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*new_str;
-
-	if (!s1 || !s2)
-	{
+	if ((!s1 || !*s1) && (!s2 || !*s2))
 		return (NULL);
-	}
-	new_str = (char *)malloc(ft_combined_strlen(s1, s2));
-	if (!new_str)
-		return (NULL);
-	ft_strcopy(new_str, s1, s2);
-	return (new_str);
+	if (s1)
+		len1 = ft_strlen(s1);
+	if (s2)
+		len2 = ft_strlen(s2);
+	str = malloc(len1 + len2 + 1);
+	if (!str)
+		return (free(s1), NULL);
+	ft_strcpy(str, s1);
+	ft_strcpy(str + len1, s2);
+	if (!str)
+		return (free(s1), NULL);
+	str[len1 + len2] = '\0';
+	free(s1);
+	return (str);
 }

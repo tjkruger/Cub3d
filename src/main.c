@@ -1,24 +1,45 @@
-#include "../MLX42/include/MLX42/MLX42.h"
 #include <stdlib.h>
+#include "../include/cub3d.h"
 
-static void	key_hook(mlx_key_data_t keydata, void *param)
+static void	set_project_root(char *exec_path)
 {
-	mlx_t	*mlx;
+	char	*resolved;
+	char	*slash;
 
-	mlx = param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		mlx_close_window(mlx);
+	if (!exec_path)
+		return;
+	resolved = realpath(exec_path, NULL);
+	if (!resolved)
+		return;
+	slash = ft_strrchr(resolved, '/');
+	if (slash)
+	{
+		*slash = '\0';
+		chdir(resolved);
+	}
+	free(resolved);
 }
 
-int	main(void)
+void exit_error(char *msg, t_main *main)
 {
-	mlx_t	*mlx;
+    write(2, "Error\n", 6);
+    write(2, msg, ft_strlen(msg));
+	(void) main;
+//    if (main)
+//        free_all(main);
+    exit(1);
+}
 
-	mlx = mlx_init(1920, 1080, "cub3d", true);
-	if (!mlx)
-		return (EXIT_FAILURE);
-	mlx_key_hook(mlx, key_hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+int	main(int ac, char **av)
+{
+	t_main	*main;
+
+	set_project_root(av[0]);
+	main = initialise();
+	parse(ac, av, main);
+	init_player(main);
+	load_textures(main);
+	run_game(main);
+	end_game(main);
 	return (EXIT_SUCCESS);
 }
