@@ -16,9 +16,7 @@ EXEC_PART   = execution_part/casting.c \
               execution_part/game_helper.c \
               execution_part/init_player.c \
               execution_part/textures.c
-COPILOT     = copilot_code/parse.c \
-              copilot_code/helpers.c \
-              copilot_code/error.c
+
 
 VAL			=	val_ini/file_validation.c \
 				val_ini/initialisation.c \
@@ -41,11 +39,8 @@ CFLAGS      = -Wall -Wextra -Werror -g -I$(INC_DIR) -I$(MLX_DIR)/include
 # === Libraries ===
 LDFLAGS     = -L$(LIBFT_DIR) -lft \
               -L$(MLX_DIR)/build -lmlx42 \
-              -L$(MLX_DIR)/build/_deps/glfw-build/src -lglfw3 \
+              -lglfw \
 			  -lm \
-			  -framework Cocoa \
-			  -framework OpenGL \
-			  -framework IOKit
 
 # === Default target ===
 all: $(NAME)
