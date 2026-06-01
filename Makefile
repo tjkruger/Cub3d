@@ -15,7 +15,8 @@ EXEC_PART   = execution_part/casting.c \
               execution_part/game.c \
               execution_part/game_helper.c \
               execution_part/init_player.c \
-              execution_part/textures.c
+              execution_part/textures.c \
+			  execution_part/movement.c
 
 
 VAL			=	val_ini/file_validation.c \

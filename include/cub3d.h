@@ -132,6 +132,9 @@ bool				init_game(t_main *main);
 uint32_t			rgb_to_rgba(int rgb);
 void				put_pixel_rgba(mlx_image_t *img, int x, int y, uint32_t color);
 
+// movement.c
+void    handle_movement(t_main *main);
+
 // free.c
 void				free_all(t_main *main);
 void				exit_error(char *msg, t_main *main);

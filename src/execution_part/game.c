@@ -66,8 +66,10 @@ bool init_game(t_main *main)
 /// @param param User parameter (pointer to t_main)
 static void key_hook(mlx_key_data_t keydata, void *param)
 {
-	(void)keydata;
-	(void)param;
+	t_main *main = (t_main *)param;
+    
+    if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+        mlx_close_window(main->mlx);
 }
 
 /// @brief Called every frame to render the game
@@ -81,6 +83,7 @@ static void frame_hook(void *param)
     int y;
 
     main = (t_main *)param;
+    handle_movement(main);
     ceiling = rgb_to_rgba(main->map_data->ceiling_color);
     floor = rgb_to_rgba(main->map_data->floor_color);
     y = 0;
