@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 16:43:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/12 21:02:20 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/12 21:10:39 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,18 @@ int	store_identifier(char *line, t_map_data *map_data, t_parser *parser)
 	return (1);
 }
 
+static void helper(int i, int j, int p_counter, t_map_data *map)
+{
+    if(p_counter > 0)
+    {
+        write(1, "multiple player pos", 19);
+        exit(1);
+    }
+    map->player_orientation = map->map[i][j];
+    map->player_pos.x = j;
+    map->player_pos.y = i;
+}
+
 void	get_height_and_length(t_map_data *map)
 {
 	int i = 0;
@@ -85,14 +97,7 @@ void	get_height_and_length(t_map_data *map)
 		{
 			if(map->map[i][j] == 'N' || map->map[i][j] == 'E' || map->map[i][j] == 'S' || map->map[i][j] == 'W')
 			{
-				if(p_counter > 0)
-				{
-					write(1, "multiple player pos", 19);
-					exit(1);
-				}
-				map->player_orientation = map->map[i][j];
-				map->player_pos.x = j;
-				map->player_pos.y = i;
+                helper(i, j, p_counter, map);
 				p_counter++;
 			}
 			j++;
