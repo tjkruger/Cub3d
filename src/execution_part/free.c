@@ -23,7 +23,7 @@ static void free_parser(t_parser *parser)
 {
     if (!parser)
         return;
-    free_str_array(parser->map_copy);
+//    free_str_array(parser->map_copy);
     free(parser->floor_color);
     free(parser->ceiling_color);
     free(parser);

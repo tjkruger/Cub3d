@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 16:47:01 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/04/25 16:48:50 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/12 16:43:19 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	make_map(char *line, t_map_data *map)
 	}
 	while(line[i] != '\0')
 	{
-		if(!(line[i] == '0' || line[i] == '1' || line[i] == 'N' || line[i] == 'E' || line[i] == 'S' || line[i] == 'W' || line[i] == ' ' || line[i] == '\n'))
+		if(!(line[i] == '0' || line[i] == '1' || line[i] == 'N' || line[i] == 'E' || line[i] == 'S' || line[i] == 'W' || line[i] == ' ' || line[i] == '\n' || line[i] == '\t'))
 			break;
 		i++;
 	}	

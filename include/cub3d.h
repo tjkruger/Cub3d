@@ -42,7 +42,7 @@ typedef struct s_point
 typedef struct s_parser
 {
 	char			*map_path;
-	char			**map_copy;
+//	char			**map_copy;
 	int				map_fd;
 	int				last_type_index;
 	char			*floor_color;
