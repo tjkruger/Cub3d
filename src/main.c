@@ -41,5 +41,6 @@ int	main(int ac, char **av)
 	load_textures(main);
 	run_game(main);
 	end_game(main);
+
 	return (EXIT_SUCCESS);
 }

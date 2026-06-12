@@ -6,11 +6,12 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:03:40 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/04/25 17:04:19 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/12 20:41:24 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
+
 
 void	parse_colours(t_map_data *map, t_parser *parser)
 {

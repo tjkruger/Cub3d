@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 16:47:01 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/12 16:43:19 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/12 20:17:17 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,11 @@
 void    validate_map(t_map_data *map_data)
 {
     char    **copy;
-    int     x;
     int     y;
 
     copy = make_map_copy(map_data->map, map_data->map_height);
     floodfill(copy, map_data->player_pos.x, map_data->player_pos.y,
               map_data->map_width, map_data->map_height);
-    y = 0;
-    while (copy[y])
-    {
-        x = 0;
-        while (copy[y][x])
-        {
-            if (copy[y][x] == '0')
-            {
-                write(2, "Error\nMap has unreachable areas\n", 32);
-                exit(1);
-            }
-            x++;
-        }
-        y++;
-    }
     y = 0;
     while (copy[y])
         free(copy[y++]);
@@ -102,15 +86,20 @@ char **make_map_copy(char **map, int height)
     return(copy);
 }
 
-void floodfill(char **map, int x, int y, int width, int height)
+void    floodfill(char **map, int x, int y, int width, int height)
 {
     if (y < 0 || y >= height || x < 0 || x >= width)
     {
         write(2, "Error\nMap is not enclosed\n", 25);
         exit(1);
     }
+        if (x >= (int)ft_strlen(map[y]))
+    {
+        write(2, "Error\nMap is not enclosed\n", 25);
+        exit(1);
+    }
     if (map[y][x] == '1' || map[y][x] == 'V')
-        return;
+        return ;
     if (map[y][x] == ' ')
     {
         write(2, "Error\nMap is not enclosed\n", 25);

@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 16:43:28 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/04/25 16:44:12 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/12 21:02:20 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,20 @@ t_main *initialise()
 }
 
 
+int is_only_num(char *s)
+{   
+    int i;
+
+    i = 0;
+    while(s[i] !='\0')
+    {
+        if(!(s[i] == ' ' || s[i] == ',' || ft_isdigit(s[i])))// was soll erlaubt sein numms , und ' '
+            return(0);
+        i++;    
+    }
+    return(1);
+}
+
 int	store_identifier(char *line, t_map_data *map_data, t_parser *parser)
 {
 	if (is_identifier(line, "NO"))
@@ -43,9 +57,17 @@ int	store_identifier(char *line, t_map_data *map_data, t_parser *parser)
 	else if (is_identifier(line, "EA"))
 		map_data->east_texture = extract_value(line);
 	else if (is_identifier(line, "F"))
-		parser->floor_color = extract_value(line);
+	{
+    	parser->floor_color = extract_value(line);
+        if(!(is_only_num(parser->floor_color)))
+            return(0);
+    }
 	else if (is_identifier(line, "C"))
-		parser->ceiling_color = extract_value(line);
+	{
+        parser->ceiling_color = extract_value(line);
+        if(!(is_only_num(parser->ceiling_color)))
+            return(0);
+    }
 	else
 		return (0);
 	return (1);
