@@ -10,13 +10,15 @@ MLX_DIR     = MLX42
 
 # === Source groups ===
 MAIN        = main.c
-EXEC_PART   = execution_part/casting.c \
+EXEC_PART   = execution_part/ray_setup.c \
+              execution_part/rendering_and_casting.c \
+              execution_part/walls_and_textures.c \
+              execution_part/load_textures.c \
               execution_part/free.c \
               execution_part/game.c \
               execution_part/game_helper.c \
               execution_part/init_player.c \
-              execution_part/textures.c \
-			  execution_part/movement.c
+              execution_part/movement.c
 
 
 VAL			=	val_ini/file_validation.c \
