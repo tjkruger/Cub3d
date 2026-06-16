@@ -15,7 +15,6 @@
 
 # define WIDTH 1920
 # define HEIGHT 1080
-# define PLAYER_SPEED 0.1
 # define ROTATION_SPEED 0.05
 # define FOV 0.9
 

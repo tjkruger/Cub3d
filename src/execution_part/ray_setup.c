@@ -41,6 +41,9 @@ void	cast_single_ray(t_main *main, t_ray *ray, int x)
 	calculate_wall_distance(main, ray, x);
 }
 
+/// @brief Initializes the X step and side distance for the DDA algorithm
+/// @param main Pointer to the main game structure
+/// @param ray Pointer to the ray structure
 static void	setup_x(t_main *main, t_ray *ray)
 {
 	float	pos_x;
@@ -60,6 +63,9 @@ static void	setup_x(t_main *main, t_ray *ray)
 	}
 }
 
+/// @brief Initializes the Y step and side distance for the DDA algorithm
+/// @param main Pointer to the main game structure
+/// @param ray Pointer to the ray structure
 static void	setup_y(t_main *main, t_ray *ray)
 {
 	float	pos_y;
