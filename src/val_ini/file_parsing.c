@@ -6,68 +6,25 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:03:40 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 20:32:41 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 22:19:31 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	free_split(char **s, int count)
+static void	read_map_lines(char *line, t_map_data *map_data, int fd)
 {
-	int	i;
+	int	send_line;
 
-	i = 0;
-	while (i < count)
+	send_line = make_map(line, map_data);
+	while (send_line && line)
 	{
-		free(s[i]);
-		i++;
+		free(line);
+		line = get_next_line(fd);
+		send_line = make_map(line, map_data);
 	}
-	free(s);
-}
-
-static int	validate_color_values(char **s)
-{
-	if (!s[2] || s[3])
-		return (0);
-	if (ft_atoi(s[0]) < 0 || ft_atoi(s[0]) > 255)
-		return (0);
-	if (ft_atoi(s[1]) < 0 || ft_atoi(s[1]) > 255)
-		return (0);
-	if (ft_atoi(s[2]) < 0 || ft_atoi(s[2]) > 255)
-		return (0);
-	return (1);
-}
-
-static int	parse_single_color(const char *color_str)
-{
-	char	**s;
-	int		result;
-
-	s = ft_split(color_str, ',');
-	if (!validate_color_values(s))
-	{
-		free_split(s, 3);
-		return (-1);
-	}
-	result = (ft_atoi(s[0]) << 16) | (ft_atoi(s[1]) << 8) | ft_atoi(s[2]);
-	free_split(s, 3);
-	return (result);
-}
-
-void	parse_colours(t_map_data *map, t_parser *parser)
-{
-	map->ceiling_color = parse_single_color(parser->ceiling_color);
-	if (map->ceiling_color == -1)
-	{
-		write(2, "Error\nInvalid ceiling color\n", 27);
-		exit(1);
-	}
-	map->floor_color = parse_single_color(parser->floor_color);
-	if (map->floor_color == -1)
-	{
-		write(2, "Error\nInvalid floor color\n", 25);
-		exit(1);
-	}
+	free(line);
+	get_height_and_length(map_data);
 }
 
 static void	read_headers(t_main *main, int *headers_found)
@@ -89,22 +46,7 @@ static void	read_headers(t_main *main, int *headers_found)
 		write(2, "Error\nMissing or invalid identifiers in map file\n", 49);
 		exit(1);
 	}
-	read_map_lines(line, main->map_data);
-}
-
-static void	read_map_lines(char *line, t_map_data *map_data)
-{
-	int	send_line;
-
-	send_line = make_map(line, map_data);
-	while (send_line && line)
-	{
-		free(line);
-		line = get_next_line(/* fd */);
-		send_line = make_map(line, map_data);
-	}
-	free(line);
-	get_height_and_length(map_data);
+	read_map_lines(line, main->map_data, main->parser->map_fd);
 }
 
 void	copy_file_blindly(t_main *main)

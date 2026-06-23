@@ -115,6 +115,14 @@ typedef struct s_main
 	mlx_texture_t	*textures[4];
 }					t_main;
 
+typedef struct s_flood
+{
+	char	**map;
+	int		width;
+	int		height;
+}	t_flood;
+
+
 # include "get_next_line.h"
 # include "val_ini.h"
 

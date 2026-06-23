@@ -6,44 +6,11 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 20:10:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 20:33:13 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 22:09:25 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
-
-void	check_extension(char *path)
-{
-	int	len;
-
-	len = 0;
-	while (path[len])
-		len++;
-	if (len < 5 || path[len - 4] != '.' || path[len - 3] != 'c' || path[len
-		- 2] != 'u' || path[len - 1] != 'b')
-	{
-		write(2, "Error\nInvalid file extension, expected .cub\n", 44);
-		exit(1);
-	}
-}
-
-// check the input for mistakes
-void	check_args(int ac, char **av, t_parser *parser)
-{
-	if (ac != 2)
-	{
-		write(2, "Error\nUsage: ./cub3d <map.cub>\n", 31);
-		exit(1);
-	}
-	check_extension(av[1]);
-	parser->map_fd = open(av[1], O_RDONLY);
-	if (parser->map_fd < 0)
-	{
-		write(2, "Error\nCould not open map file\n", 30);
-		exit(1);
-	}
-	parser->map_path = av[1];
-}
 
 int	is_identifier(char *line, char *id)
 {
@@ -71,33 +38,30 @@ char	*extract_value(char *line)
 	return (ft_substr(line, i, len));
 }
 
+static void	exit_texture_error(const char *direction)
+{
+	write(2, "Error\nTexture not loaded: ", 26);
+	write(2, direction, ft_strlen(direction));
+	write(2, "\n", 1);
+	exit(1);
+}
+
+static void	validate_single_texture(const char *path, const char *direction)
+{
+	int	fd;
+
+	if (!path)
+		exit_texture_error(direction);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		exit_texture_error(direction);
+	close(fd);
+}
+
 void	validate_textures(t_map_data *map)
 {
-	int	i;
-
-	i = 0;
-	if (!map->north_texture || (i = open(map->north_texture, O_RDONLY)) < 0)
-	{
-		write(1, "north texture wasnt loaded", 26);
-		exit(1);
-	}
-	close(i);
-	if (!map->east_texture || (i = open(map->east_texture, O_RDONLY)) < 0)
-	{
-		write(1, "east texture wasnt loaded", 25);
-		exit(1);
-	}
-	close(i);
-	if (!map->south_texture || (i = open(map->south_texture, O_RDONLY)) < 0)
-	{
-		write(1, "south texture wasnt loaded", 26);
-		exit(1);
-	}
-	close(i);
-	if (!map->west_texture || (i = open(map->west_texture, O_RDONLY)) < 0)
-	{
-		write(1, "west texture wasnt loaded", 25);
-		exit(1);
-	}
-	close(i);
+	validate_single_texture(map->north_texture, "north");
+	validate_single_texture(map->east_texture, "east");
+	validate_single_texture(map->south_texture, "south");
+	validate_single_texture(map->west_texture, "west");
 }

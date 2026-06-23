@@ -24,7 +24,13 @@ EXEC_PART   = execution_part/ray_setup.c \
 VAL			=	val_ini/file_validation.c \
 				val_ini/initialisation.c \
 				val_ini/check_map.c \
-				val_ini/file_parsing.c 
+				val_ini/file_parsing.c \
+				val_ini/argument_checking.c \
+				val_ini/colour_parsing.c \
+				val_ini/flood_fill.c \
+				val_ini/map_building.c \
+				val_ini/map_player_dimesion.c
+
 GNL         =	../GNL/get_next_line.c \
                 ../GNL/get_next_line_utils.c
 #BSP         = bsp/bsp.c

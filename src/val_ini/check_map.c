@@ -6,81 +6,31 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 16:47:01 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 20:30:37 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 21:59:58 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-void	validate_map(t_map_data *map_data)
+static void	free_map_copy(char **copy)
 {
-	char	**copy;
-	int		y;
+	int	y;
 
-	copy = make_map_copy(map_data->map, map_data->map_height);
-	floodfill(copy, map_data->player_pos.x, map_data->player_pos.y,
-		map_data->map_width, map_data->map_height);
 	y = 0;
 	while (copy[y])
 		free(copy[y++]);
 	free(copy);
 }
 
-int	is_map_line(char *line)
+void	validate_map(t_map_data *map_data)
 {
-	int	i;
+	t_flood	f;
 
-	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	return (line[i] == '1' || line[i] == '0');
-}
-
-static int	valid_map_chars(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (!(line[i] == '0' || line[i] == '1' || line[i] == 'N'
-				|| line[i] == 'E' || line[i] == 'S' || line[i] == 'W'
-				|| line[i] == ' ' || line[i] == '\n' || line[i] == '\t'))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	make_map(char *line, t_map_data *map)
-{
-	static char	*all = NULL;
-	int			i;
-
-	i = 0;
-	if (!line)
-	{
-		map->map = ft_split(all, '\n');
-		free(all);
-		return (0);
-	}
-	while (line[i] != '\0')
-	{
-		if (!(line[i] == '0' || line[i] == '1' || line[i] == 'N'
-				|| line[i] == 'E' || line[i] == 'S' || line[i] == 'W'
-				|| line[i] == ' ' || line[i] == '\n' || line[i] == '\t'))
-			break ;
-		i++;
-	}
-	if (line[i] == '\0')
-		all = ft_strjoin(all, line);
-	else
-	{
-		map->map = ft_split(all, '\n');
-		free(all);
-		return (0);
-	}
-	return (1);
+	f.map = make_map_copy(map_data->map, map_data->map_height);
+	f.width = map_data->map_width;
+	f.height = map_data->map_height;
+	floodfill(&f, map_data->player_pos.x, map_data->player_pos.y);
+	free_map_copy(f.map);
 }
 
 char	**make_map_copy(char **map, int height)
@@ -89,10 +39,9 @@ char	**make_map_copy(char **map, int height)
 	int		i;
 	int		j;
 
-	i = 0;
-	j = 0;
 	copy = malloc(sizeof(char *) * (height + 1));
-	while (height > i)
+	i = 0;
+	while (i < height)
 	{
 		j = 0;
 		copy[i] = malloc(sizeof(char) * (ft_strlen(map[i]) + 1));
@@ -106,30 +55,4 @@ char	**make_map_copy(char **map, int height)
 	}
 	copy[i] = NULL;
 	return (copy);
-}
-
-void	floodfill(char **map, int x, int y, int width, int height)
-{
-	if (y < 0 || y >= height || x < 0 || x >= width)
-	{
-		write(2, "Error\nMap is not enclosed\n", 25);
-		exit(1);
-	}
-	if (x >= (int)ft_strlen(map[y]))
-	{
-		write(2, "Error\nMap is not enclosed\n", 25);
-		exit(1);
-	}
-	if (map[y][x] == '1' || map[y][x] == 'V')
-		return ;
-	if (map[y][x] == ' ')
-	{
-		write(2, "Error\nMap is not enclosed\n", 25);
-		exit(1);
-	}
-	map[y][x] = 'V';
-	floodfill(map, x + 1, y, width, height);
-	floodfill(map, x - 1, y, width, height);
-	floodfill(map, x, y + 1, width, height);
-	floodfill(map, x, y - 1, width, height);
 }

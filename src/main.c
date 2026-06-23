@@ -6,12 +6,12 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 20:10:00 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 20:10:28 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 22:21:38 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "../include/cub3d.h"
+#include <stdlib.h>
 
 static void	set_project_root(char *exec_path)
 {
@@ -19,10 +19,10 @@ static void	set_project_root(char *exec_path)
 	char	*slash;
 
 	if (!exec_path)
-		return;
+		return ;
 	resolved = realpath(exec_path, NULL);
 	if (!resolved)
-		return;
+		return ;
 	slash = ft_strrchr(resolved, '/');
 	if (slash)
 	{
@@ -32,12 +32,12 @@ static void	set_project_root(char *exec_path)
 	free(resolved);
 }
 
-void exit_error(char *msg, t_main *main)
+void	exit_error(char *msg, t_main *main)
 {
-    write(2, "Error\n", 6);
-    write(2, msg, ft_strlen(msg));
-	(void) main;
-    exit(1);
+	write(2, "Error\n", 6);
+	write(2, msg, ft_strlen(msg));
+	(void)main;
+	exit(1);
 }
 
 int	main(int ac, char **av)
@@ -51,6 +51,5 @@ int	main(int ac, char **av)
 	load_textures(main);
 	run_game(main);
 	end_game(main);
-
 	return (EXIT_SUCCESS);
 }
