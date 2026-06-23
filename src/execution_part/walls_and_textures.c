@@ -6,7 +6,7 @@
 /*   By: awolschi <awolschi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 20:25:45 by awolschi          #+#    #+#             */
-/*   Updated: 2026/06/16 20:33:04 by awolschi         ###   ########.fr       */
+/*   Updated: 2026/06/23 18:18:15 by awolschi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,36 @@ void	calculate_wall_distance(t_main *main, t_ray *ray, int column)
 		ray->texture_x = 0;
 	}
 	(void)column;
+}
+
+void	calculate_wall_distance(t_main *main, t_ray *ray, int column)
+{
+	int tex_index;
+	if (!main || !ray || !main->player)
+		return;
+    calculate_perp_wall_dist(ray);
+    calculate_wall_hit(main, ray);
+    tex_index = select_texture(ray);
+    calculate_texture(main, ray, tex_index);
+    (void)column;
+}
+
+static void	calculate_perp_wall_dist()
+{
+	
+}
+
+static void	calculate_wall_hit()
+{
+
+}
+
+static int	select_texture()
+{
+
+}
+
+static void	calculate_texture()
+{
+
 }
