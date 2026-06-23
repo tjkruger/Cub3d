@@ -6,13 +6,13 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 22:10:36 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 22:11:22 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 23:03:25 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	helper(int i, int j, int p_counter, t_map_data *map)
+void	helper(int i, int j, int p_counter, t_map_data *map)
 {
 	if (p_counter > 0)
 	{
@@ -24,12 +24,12 @@ static void	helper(int i, int j, int p_counter, t_map_data *map)
 	map->player_pos.y = i;
 }
 
-static int	is_player_char(char c)
+int	is_player_char(char c)
 {
 	return (c == 'N' || c == 'E' || c == 'S' || c == 'W');
 }
 
-static int	get_row_length(char *row)
+int	get_row_length(char *row)
 {
 	int	j;
 
@@ -39,7 +39,7 @@ static int	get_row_length(char *row)
 	return (j);
 }
 
-static void	process_row(t_map_data *map, int i, int *p_counter)
+void	process_row(t_map_data *map, int i, int *p_counter)
 {
 	int	j;
 

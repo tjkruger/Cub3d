@@ -6,13 +6,13 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:03:40 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 22:19:31 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 23:07:25 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	read_map_lines(char *line, t_map_data *map_data, int fd)
+void	read_map_lines(char *line, t_map_data *map_data, int fd)
 {
 	int	send_line;
 

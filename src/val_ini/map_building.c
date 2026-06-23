@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 21:58:32 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 21:58:44 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 23:11:56 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	is_map_line(char *line)
 	return (line[i] == '1' || line[i] == '0');
 }
 
-static int	is_valid_map_char(char c)
+int	is_valid_map_char(char c)
 {
-	return (c == '0' || c == '1' || c == 'N' || c == 'E'
-		|| c == 'S' || c == 'W' || c == ' ' || c == '\n' || c == '\t');
+	return (c == '0' || c == '1' || c == 'N' || c == 'E' || c == 'S' || c == 'W'
+		|| c == ' ' || c == '\n' || c == '\t');
 }
 
-static int	line_is_valid(char *line)
+int	line_is_valid(char *line)
 {
 	int	i;
 
@@ -44,8 +44,9 @@ static int	line_is_valid(char *line)
 
 int	make_map(char *l, t_map_data *map)
 {
-	static char	*all = NULL;
+	char	*all;
 
+	all = NULL;
 	if (!l)
 	{
 		map->map = ft_split(all, '\n');

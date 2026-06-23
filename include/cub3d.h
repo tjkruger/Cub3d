@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 22:25:33 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 22:25:50 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 23:01:36 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "libft.h"
-# include "get_next_line.h"
-# include "val_ini.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
@@ -137,6 +135,9 @@ typedef struct s_flood
 /* ************************************************************************** */
 /*   Function prototypes - fill these in as you go                            */
 /* ************************************************************************** */
+
+# include "get_next_line.h"
+# include "val_ini.h"
 
 // game.c
 void				run_game(t_main *main);

@@ -6,13 +6,13 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 16:47:01 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 21:59:58 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 23:02:35 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d.h"
 
-static void	free_map_copy(char **copy)
+void	free_map_copy(char **copy)
 {
 	int	y;
 

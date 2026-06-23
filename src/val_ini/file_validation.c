@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 20:10:17 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 22:09:25 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/23 23:02:06 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*extract_value(char *line)
 	return (ft_substr(line, i, len));
 }
 
-static void	exit_texture_error(const char *direction)
+void	exit_texture_error(const char *direction)
 {
 	write(2, "Error\nTexture not loaded: ", 26);
 	write(2, direction, ft_strlen(direction));
@@ -46,7 +46,7 @@ static void	exit_texture_error(const char *direction)
 	exit(1);
 }
 
-static void	validate_single_texture(const char *path, const char *direction)
+void	validate_single_texture(const char *path, const char *direction)
 {
 	int	fd;
 
