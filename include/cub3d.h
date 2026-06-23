@@ -1,17 +1,29 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/23 22:25:33 by tjkruger          #+#    #+#             */
+/*   Updated: 2026/06/23 22:25:50 by tjkruger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "libft.h"
+# include "get_next_line.h"
+# include "val_ini.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <string.h>
+# include <unistd.h>
 
 # define WIDTH 1920
 # define HEIGHT 1080
@@ -41,7 +53,7 @@ typedef struct s_point
 typedef struct s_parser
 {
 	char			*map_path;
-//	char			**map_copy;
+	//	char			**map_copy;
 	int				map_fd;
 	int				last_type_index;
 	char			*floor_color;
@@ -117,14 +129,10 @@ typedef struct s_main
 
 typedef struct s_flood
 {
-	char	**map;
-	int		width;
-	int		height;
-}	t_flood;
-
-
-# include "get_next_line.h"
-# include "val_ini.h"
+	char			**map;
+	int				width;
+	int				height;
+}					t_flood;
 
 /* ************************************************************************** */
 /*   Function prototypes - fill these in as you go                            */
@@ -137,10 +145,11 @@ bool				init_game(t_main *main);
 
 // game_helper.c
 uint32_t			rgb_to_rgba(int rgb);
-void				put_pixel_rgba(mlx_image_t *img, int x, int y, uint32_t color);
+void				put_pixel_rgba(mlx_image_t *img, int x, int y,
+						uint32_t color);
 
 // movement.c
-void    handle_movement(t_main *main);
+void				handle_movement(t_main *main);
 
 // free.c
 void				free_all(t_main *main);
@@ -158,13 +167,14 @@ void				casting_loop(t_main *main);
 void				cast_single_ray(t_main *main, t_ray *ray, int x);
 void				init_step_and_side_dist(t_main *main, t_ray *ray);
 void				perform_dda(t_main *main, t_ray *ray);
-void				calculate_wall_distance(t_main *main, t_ray *ray, int column);
+void				calculate_wall_distance(t_main *main, t_ray *ray,
+						int column);
 
 // error.c
 void				error_exit(const char *message);
 
 /* ************************************************************************** */
-/*   Libft declarations (minimal subset)                                       */
+/*   Libft declarations (minimal subset)                                      */
 /* ************************************************************************** */
 // int					ft_strlen(const char *s);
 // int					ft_atoi(const char *str);
