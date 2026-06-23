@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/06/23 20:10:00 by tjkruger          #+#    #+#             */
+/*   Updated: 2026/06/23 20:10:28 by tjkruger         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "../include/cub3d.h"
 
@@ -25,8 +37,6 @@ void exit_error(char *msg, t_main *main)
     write(2, "Error\n", 6);
     write(2, msg, ft_strlen(msg));
 	(void) main;
-//    if (main)
-//        free_all(main);
     exit(1);
 }
 
