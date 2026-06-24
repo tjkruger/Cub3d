@@ -6,7 +6,7 @@
 /*   By: tjkruger <tjkruger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/23 21:58:32 by tjkruger          #+#    #+#             */
-/*   Updated: 2026/06/23 23:11:56 by tjkruger         ###   ########.fr       */
+/*   Updated: 2026/06/24 08:39:31 by tjkruger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,18 @@ int	line_is_valid(char *line)
 	return (1);
 }
 
-int	make_map(char *l, t_map_data *map)
+int	make_map(char *line, t_map_data *map)
 {
-	char	*all;
+	static char	*all;
 
-	all = NULL;
-	if (!l)
+	if (!line)
 	{
 		map->map = ft_split(all, '\n');
 		free(all);
 		return (0);
 	}
-	if (line_is_valid(l))
-		all = ft_strjoin(all, l);
+	if (line_is_valid(line))
+		all = ft_strjoin(all, line);
 	else
 	{
 		map->map = ft_split(all, '\n');
